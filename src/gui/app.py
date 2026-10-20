@@ -16,7 +16,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication, QDialog
 
-from . import theme
+from . import icons, theme
 from .mainwindow import MainWindow
 from .startup import StartupDialog
 
@@ -46,6 +46,8 @@ def main(argv: list[str] | None = None) -> int:
     font.setStyleStrategy(QFont.PreferAntialias)
     app.setFont(font)
     theme.apply(app)
+    # 任务栏 / 窗口图标：优先用打包时带上的 app.ico，和 exe 图标保持一致
+    app.setWindowIcon(icons.app_icon() or icons.icon("blur", size=256))
 
     win = MainWindow()
     if shot:

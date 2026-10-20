@@ -72,6 +72,8 @@ if not exist "bin\ffmpeg.exe" (
 rem ---------- 5. build ----------
 echo [5/5] Building with PyInstaller ...
 python -m PyInstaller --noconfirm --clean --windowed --onedir --name MosaicStudio ^
+    --icon "src\gui\assets\app.ico" ^
+    --add-data "src\gui\assets\app.ico;src\gui\assets" ^
     --collect-all onnxruntime --collect-all cv2 ^
     --exclude-module tkinter --exclude-module matplotlib ^
     --exclude-module scipy --exclude-module pandas --exclude-module PIL ^

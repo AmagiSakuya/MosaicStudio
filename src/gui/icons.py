@@ -349,4 +349,16 @@ def pixmap(name: str, color: str = theme.TEXT, size: int = 18) -> QPixmap:
     return icon(name, color, size).pixmap(size, size)
 
 
+def app_icon() -> QIcon | None:
+    """应用图标（exe / 任务栏用）。
+
+    优先读打包时一起带上的 `assets/app.ico`（和 exe 的图标资源是同一张图），
+    文件不在时返回 None，调用方可以退回现画的矢量图形。
+    """
+    path = theme.ASSETS / "app.ico"
+    if path.is_file():
+        return QIcon(str(path))
+    return None
+
+
 _ensure_assets()

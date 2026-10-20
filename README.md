@@ -160,6 +160,10 @@ dist\MosaicStudio\
 整个 `dist\MosaicStudio` 文件夹是**便携**的，拷到别的机器直接能跑。素材不用放进来，
 工程里存的是素材的绝对路径（同时记一份相对路径，工程整体搬家时能自动找回）。
 
+> **图标**：`build.bat` 用 `src/gui/assets/app.ico`（10 个尺寸，16~256）作为 exe 图标，
+> 同一张图也会打进包内，运行时的窗口 / 任务栏图标沿用它。
+> 想换图标直接替换这个 `.ico` 再重新打包即可，不用改代码。
+
 > **模型和 CUDA 运行库默认不打进发布包**（加起来 1.5 GB 以上）。第一次运行时点
 > 「模型配置」右上角的**齿轮 → 运行时管理**，在界面里选镜像下载即可：
 > 模型落到 `dist\MosaicStudio\model\`，CUDA DLL 落到 `dist\MosaicStudio\runtime\cuda\bin\`。
@@ -438,6 +442,7 @@ ai-video-mosaic/
 │     ├─ scan.py           # 检测流程（返回结果，不落盘）
 │     ├─ exporter.py       # ffmpeg 滤镜链导出 + OpenCV 兜底
 │     ├─ icons.py          # 矢量图标
+│     ├─ assets/app.ico    # 应用图标（同时作为打包后 exe 的图标）
 │     └─ theme.py          # 深色主题
 ├─ main_gui.py             # 程序入口
 ├─ download_model.py       # 命令行下模型（备用，界面里也能下）

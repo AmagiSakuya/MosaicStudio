@@ -153,7 +153,7 @@ class MainWindow(QMainWindow):
         self._import_dir = str(projects.default_project_dir())
 
         self.setWindowTitle(APP_TITLE)
-        self.setWindowIcon(icons.icon("blur", size=64))
+        self.setWindowIcon(icons.app_icon() or icons.icon("blur", size=64))
         self.resize(1660, 980)
         self.setMinimumSize(1180, 760)
 
