@@ -2,8 +2,9 @@
 
 <img src="docs/banner.png" alt="Mosaic Studio" width="820">
 
-<h3>用本地 AI 扫出视频里需要打码的片段，在时间线上逐段微调，一次编码导出成片<br>全程离线 · 不联网 · 不上传</h3>
-
+<p align="center">
+  <strong>本地AI视频片段打码工具</strong>
+</p>
 <p>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-orange.svg" alt="License"></a>
   <img src="https://img.shields.io/badge/Platform-Windows-blue.svg" alt="Platform">
@@ -18,28 +19,6 @@
 
 <img src="docs/screenshot-editor.png" alt="Mosaic Studio 主界面" width="100%">
 
-> 界面：左侧素材库与检测设置、中间节目监视器与三轨时间线、右侧片段列表与属性面板。
-> 时间线上的红色片段是检测出来的打码区间，青色片段是按每段起止对齐的遮挡图，
-> 监视器实时预览「模糊 + 图片叠加」的最终效果。
-
----
-
-## 目录
-
-- [功能特性](#功能特性)
-- [快速开始](#快速开始)
-- [界面与操作](#界面与操作)
-- [运行时管理（模型 / GPU）](#运行时管理模型--gpu)
-- [工程文件](#工程文件vproj)
-- [导出说明](#导出说明)
-- [关于模型](#关于模型)
-- [检测参数](#检测参数)
-- [目录结构](#目录结构)
-- [调参建议](#调参建议)
-- [常见问题](#常见问题)
-- [许可证](#许可证)
-
----
 
 ## 功能特性
 
