@@ -1,17 +1,26 @@
-# Mosaic Studio · 本地视频智能打码工作室
+<div align="center">
 
-用本地 AI 模型扫描视频里需要打码的片段，在**类 Premiere 的时间线**上逐段确认、微调、叠加遮挡图，
-最后直接导出打好模糊的成片。**全程离线，不联网、不上传**，有 N 卡时自动走 GPU 推理。
+<img src="docs/banner.png" alt="Mosaic Studio" width="820">
 
-![许可证](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)
-![平台](https://img.shields.io/badge/platform-Windows-0078D6.svg)
-![离线](https://img.shields.io/badge/100%25-offline-success.svg)
+<h3>用本地 AI 扫出视频里需要打码的片段，在时间线上逐段微调，一次编码导出成片<br>全程离线 · 不联网 · 不上传</h3>
+
+<p>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-orange.svg" alt="License"></a>
+  <img src="https://img.shields.io/badge/Platform-Windows-blue.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB.svg" alt="Python">
+  <img src="https://img.shields.io/badge/Offline-100%25-success.svg" alt="Offline">
+  <a href="https://github.com/AmagiSakuya"><img src="https://img.shields.io/badge/Author-@AmagiSakuya-purple.svg" alt="Author"></a>
+</p>
+
+</div>
+
+---
 
 <img src="docs/screenshot-editor.png" alt="Mosaic Studio 主界面" width="100%">
 
 > 界面：左侧素材库与检测设置、中间节目监视器与三轨时间线、右侧片段列表与属性面板。
-> 截图中的红色片段就是检测出来的打码区间，监视器正在实时预览模糊效果。
+> 时间线上的红色片段是检测出来的打码区间，青色片段是按每段起止对齐的遮挡图，
+> 监视器实时预览「模糊 + 图片叠加」的最终效果。
 
 ---
 
@@ -73,6 +82,12 @@
 按 `I` 或点「+ 图片」，选一张图（自动加入素材库）→ 作为叠加片段放到播放头位置。
 属性里可调**缩放、水平 / 垂直位置、不透明度**。右键「以此图片对齐所有模糊片段」，
 可以按每段打码的时间各复制一张，适合"每个片段都盖同一张遮挡图"。
+
+<img src="docs/screenshot-align.png" alt="图片片段对齐所有模糊片段" width="100%">
+
+> 右键一张图片片段 →「以此图片对齐所有模糊片段」：清掉其它图片片段，再按每个模糊片段的
+> 起止时间各复制一张（位置 / 缩放 / 透明度沿用这张图的设置）。上图中青色片段就是自动对齐的结果，
+> 和红色模糊片段一一对应。
 
 ### 4. 工程只存引用，素材放哪都行
 
