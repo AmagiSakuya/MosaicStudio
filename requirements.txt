@@ -1,0 +1,12 @@
+# 运行时依赖（CPU 版，默认；exe 用它打包体积最小）
+onnxruntime>=1.17
+opencv-python>=4.9
+numpy>=1.24
+
+# GUI 编辑器（Mosaic Studio）
+PySide6-Essentials>=6.5
+# 预览声音需要 QtMultimedia（含在 Addons 里）
+PySide6-Addons>=6.5
+
+# 打包 exe 需要（只构建时用）
+pyinstaller>=6.3

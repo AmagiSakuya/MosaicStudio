@@ -1,0 +1,19 @@
+# GPU 版依赖（NVIDIA 显卡，推理快 15 倍以上）
+#
+# 先卸掉 CPU 版，两个包不能共存：
+#   pip uninstall -y onnxruntime
+#   pip install -r requirements-gpu.txt
+#
+# 下面的 nvidia-* 是 CUDA 13 / cuDNN 9 的运行库（pip 安装，不用装 3GB 的 CUDA Toolkit）。
+# 如果你的 onnxruntime-gpu 是 CUDA 12 版本，把 cu13 相关包换成 nvidia-cublas-cu12 /
+# nvidia-cudnn-cu12 / nvidia-cuda-runtime-cu12 即可。
+
+onnxruntime-gpu>=1.20
+nvidia-cublas
+nvidia-cuda-runtime
+nvidia-cuda-nvrtc
+nvidia-cudnn-cu13
+
+opencv-python>=4.9
+numpy>=1.24
+pyinstaller>=6.3

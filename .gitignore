@@ -1,0 +1,55 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+*.spec
+.pytest_cache/
+.mypy_cache/
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+env/
+
+# ---------- 本地工具 / 编辑器 ----------
+.vscode/
+.idea/
+.editor-settings.json
+.workbuddy/
+.workbuddy-ai/
+*.swp
+Thumbs.db
+desktop.ini
+
+# ---------- 运行时大文件（用 download_*.py 或界面里的「运行时管理」拉取）----------
+bin/*.exe
+bin/ffmpeg*
+model/**
+!model/.gitkeep
+runtime/
+*.onnx
+*.part
+
+# ---------- 素材与产出（体积大 / 含个人内容）----------
+input/
+output/
+projects/*
+!projects/.gitkeep
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.flv
+*.webm
+*.wmv
+*.ts
+*.vproj
+*.vproj.json
+*.nsfw.json
+
+# ---------- 系统 ----------
+.DS_Store
