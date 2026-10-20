@@ -46,23 +46,32 @@ def check(path: Path) -> tuple[bool, str]:
     return True, first.strip()
 
 
-def install_from_pip(mirror: str | None) -> Path | None:
-    cmd = [sys.executable, "-m", "pip", "install", "-q", "imageio-ffmpeg"]
-    if mirror:
-        cmd += ["-i", mirror]
-    print("· 正在通过 pip 获取 imageio-ffmpeg（内置 ffmpeg 二进制）…")
-    try:
-        subprocess.run(cmd, check=True)
-    except subprocess.SubprocessError as exc:
-        print(f"  pip 安装失败：{exc}")
-        return None
-    try:
-        import imageio_ffmpeg  # noqa: PLC0415
+PIP_MIRRORS = (
+    "https://pypi.tuna.tsinghua.edu.cn/simple",
+    "https://mirrors.aliyun.com/pypi/simple",
+    "https://pypi.org/simple",
+)
 
-        return Path(imageio_ffmpeg.get_ffmpeg_exe())
-    except Exception as exc:  # noqa: BLE001
-        print(f"  无法定位 imageio-ffmpeg 的二进制：{exc}")
-        return None
+
+def install_from_pip(mirror: str | None) -> Path | None:
+    mirrors = ([mirror] if mirror else []) + [m for m in PIP_MIRRORS if m != mirror]
+    for m in mirrors:
+        cmd = [sys.executable, "-m", "pip", "install", "-q", "imageio-ffmpeg",
+               "-i", m, "--timeout", "20", "--retries", "1", "--prefer-binary"]
+        print(f"· 正在通过 pip 获取 imageio-ffmpeg（镜像 {m}）…")
+        try:
+            subprocess.run(cmd, check=True, timeout=300)
+        except (subprocess.SubprocessError, OSError) as exc:
+            print(f"  失败：{exc}")
+            continue
+        try:
+            import imageio_ffmpeg  # noqa: PLC0415
+
+            return Path(imageio_ffmpeg.get_ffmpeg_exe())
+        except Exception as exc:  # noqa: BLE001
+            print(f"  无法定位 imageio-ffmpeg 的二进制：{exc}")
+            return None
+    return None
 
 
 def install_from_url(url: str) -> Path | None:

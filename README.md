@@ -128,6 +128,23 @@ build.bat          :: 首次会建 .venv、装依赖、下模型和 ffmpeg（也
 run_gui.bat        :: 启动编辑器
 ```
 
+两个 bat 都会在缺依赖时自动安装，并且**优先走国内镜像**：清华 → 阿里云 → 腾讯云 → 中科大 → 官方 PyPI，
+任一成功就停；单个源 15 秒连不上就立刻换下一个，不会卡在「Installing requirements.txt」。
+想固定某个源：
+
+```bat
+set MOSAIC_PIP_MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple
+build.bat
+```
+
+也可以单独调用安装脚本（它会用仓库里的 `.venv`）：
+
+```bat
+pip_install.bat -r requirements.txt      :: 装依赖
+pip_install.bat --upgrade pip            :: 升级 pip
+pip_install.bat onnxruntime-directml     :: 装单个包（AMD / Intel 显卡）
+```
+
 也可以带工程启动：
 
 ```bat
@@ -141,7 +158,7 @@ run_gui.bat --project projects\我的工程.vproj
 .venv\Scripts\python -m pip uninstall -y onnxruntime
 
 :: 2. 装 GPU 版 + CUDA 13 / cuDNN 9 运行库（走 pip，不用装 3GB 的 CUDA Toolkit）
-.venv\Scripts\python -m pip install -r requirements-gpu.txt
+.venv\Scripts\python -m pip install -r requirements-gpu.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ### 打包成独立程序
@@ -163,6 +180,10 @@ dist\MosaicStudio\
 > **图标**：`build.bat` 用 `src/gui/assets/app.ico`（10 个尺寸，16~256）作为 exe 图标，
 > 同一张图也会打进包内，运行时的窗口 / 任务栏图标沿用它。
 > 想换图标直接替换这个 `.ico` 再重新打包即可，不用改代码。
+
+> **重新打包不会清掉你下载的东西**：PyInstaller 会整个重建 `dist\MosaicStudio`，
+> 所以 `build.bat` 在打包前先把 `model\`、`runtime\`、`projects\` 挪到 `dist\_keep`，
+> 打完再移回来 —— 已下载的模型、CUDA 运行库和你的工程都保得住（打包失败也会自动还原）。
 
 > **模型和 CUDA 运行库默认不打进发布包**（加起来 1.5 GB 以上）。第一次运行时点
 > 「模型配置」右上角的**齿轮 → 运行时管理**，在界面里选镜像下载即可：
@@ -447,6 +468,7 @@ ai-video-mosaic/
 ├─ main_gui.py             # 程序入口
 ├─ download_model.py       # 命令行下模型（备用，界面里也能下）
 ├─ download_ffmpeg.py      # 下载 / 更新内置 ffmpeg
+├─ pip_install.bat         # 带国内镜像回退的 pip 安装（build / run_gui 都用它）
 ├─ build.bat               # 一键打包 dist\MosaicStudio
 ├─ run_gui.bat             # 源码方式启动
 └─ requirements.txt
@@ -509,6 +531,19 @@ CPU 版还是 GPU 版、CUDA 运行库是否就位。检测时也可以另开窗
 ```bat
 python download_model.py --mirror https://hf-mirror.com
 ```
+
+**Q：build.bat 卡在 `Installing requirements.txt ...` / 下载特别慢？**
+pip 默认走官方源，国内经常几十 KB/s。`build.bat` / `run_gui.bat` 现在会用
+`pip_install.bat` 依次尝试清华 / 阿里 / 腾讯 / 中科大 / 官方 PyPI，单个源 15 秒不通就换下一个。
+如果全都失败，多半是代理问题：
+
+```bat
+set HTTP_PROXY=http://127.0.0.1:7890
+set HTTPS_PROXY=http://127.0.0.1:7890
+build.bat
+```
+
+也可以手动指定镜像：`set MOSAIC_PIP_MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple`。
 
 **Q：exe 被杀毒软件报毒？**
 PyInstaller 打包程序的常见误报，加信任即可。
